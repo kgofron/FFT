@@ -1,4 +1,9 @@
 import numpy as np
+import time
+
+def time_lap(t1, t2, message):
+    print message, t2 - t1
+    return t2 - t1
 
 ### Compute DFT ###
 def DFT_slow(x):
@@ -13,8 +18,11 @@ def DFT_slow(x):
 x = np.random.random(1024)
 np.allclose(DFT_slow(x), np.fft.fft(x))
 
-%timeit DFT_slow(x)
-%timeit np.fft.fft(x)
+#%timeit DFT_slow(x)
+#%timeit np.fft.fft(x)
+t1 = time.time(); DFT_slow(x); t2 = time.time(); time_lap(t1, t2, "DFT_slow")
+t1 = time.time(); np.fft.fft(x); t2 = time.time(); time_lap(t1, t2, "np")
+
 
 ### DFT to FFT: Exploiting Symmetry###
 def FFT(x):
@@ -35,10 +43,14 @@ def FFT(x):
     
 x = np.random.random(1024)
 np.allclose(FFT(x), np.fft.fft(x))
-    
-%timeit DFT_slow(x)
-%timeit FFT(x)
-%timeit np.fft.fft(x)
+
+#%timeit DFT_slow(x)
+#%timeit  FFT(x) 
+#%timeit np.fft.fft(x)
+print 
+t1 = time.time(); DFT_slow(x); t2 = time.time(); time_lap(t1, t2, "DFT_slow")
+t1 = time.time(); FFT(x); t2 = time.time(); time_lap(t1, t2, "FFT")    
+t1 = time.time(); np.fft.fft(x); t2 = time.time(); time_lap(t1, t2, "np")
     
 ### Vectorized Numpy Version
 def FFT_vectorized(x):
@@ -76,9 +88,13 @@ np.allclose(FFT_vectorized(x), np.fft.fft(x))
     
 # Large Arrays for tests 
 x = np.random.random(1024 * 16)
-%timeit FFT(x)
-%timeit FFT_vectorized(x)
-%timeit np.fft.fft(x)
+#%timeit FFT(x)
+#%timeit FFT_vectorized(x)
+#%timeit np.fft.fft(x)
+print
+t1 = time.time(); FFT(x); t2 = time.time(); time_lap(t1, t2, "FFT")
+t1 = time.time(); FFT_vectorized(x); t2 = time.time(); time_lap(t1, t2, "FFT_vectorized")    
+t1 = time.time(); np.fft.fft(x); t2 = time.time(); time_lap(t1, t2, "np")
 
 # We're now within about a factor of 10 of the FFTPACK benchmark, using only a couple dozen lines of pure Python + NumPy
 # http://www.netlib.org/fftpack/fft.c
