@@ -1,5 +1,8 @@
 #!/usr/bin/python
 # python
+"""
+http://matplotlib.org/examples/pylab_examples/psd_demo.html
+"""
 
 from pylab import *
 
