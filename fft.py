@@ -92,9 +92,12 @@ x = np.random.random(1024 * 16)
 #%timeit FFT_vectorized(x)
 #%timeit np.fft.fft(x)
 print
+# t1 = time.time(); DFT_slow(x); t2 = time.time(); time_lap(t1, t2, "DFT_slow")
 t1 = time.time(); FFT(x); t2 = time.time(); time_lap(t1, t2, "FFT")
 t1 = time.time(); FFT_vectorized(x); t2 = time.time(); time_lap(t1, t2, "FFT_vectorized")    
 t1 = time.time(); np.fft.fft(x); t2 = time.time(); time_lap(t1, t2, "np")
 
 # We're now within about a factor of 10 of the FFTPACK benchmark, using only a couple dozen lines of pure Python + NumPy
 # http://www.netlib.org/fftpack/fft.c
+
+# Plotting with Matpoltlib: http://jakevdp.github.io/mpl_tutorial/tutorial_pages/tut1.html
